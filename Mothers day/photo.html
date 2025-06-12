@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MAA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Merienda:wght@300..900&family=Oleo+Script:wght@400;700&family=Pacifico&family=Playwrite+DK+Loopet&family=Playwrite+RO:wght@100..400&family=Satisfy&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <link rel="stylesheet" href="index.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      padding: 1rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      background-color: var(--primary-color, rgb(255, 199, 208));
+    }
+    
+    .page_content {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      text-align: center;
+      z-index: 1;
+    }
+    
+    .slider-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      height: 50vh;
+      min-height: 250px;
+      margin: 1rem auto;
+      perspective: 1000px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      animation: rotate 30s linear infinite;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    
+    .slider.paused {
+      animation-play-state: paused;
+    }
+    
+    .slider span {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      max-width: 250px;
+      height: 60%;
+      min-height: 200px;
+      transform-origin: center;
+      transform-style: preserve-3d;
+      transform: 
+        translateX(-50%) 
+        translateY(-50%) 
+        rotateY(calc(var(--i) * 45deg)) 
+        translateZ(calc(min(25vw, 300px)));
+      transition: transform 0.5s ease;
+      will-change: transform;
+    }
+    
+    .slider span img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: all 0.5s ease;
+    }
+    
+    .slider span:hover img {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    }
+    
+    @media (hover: none) {
+      .slider span:hover img {
+        transform: none;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    /* Controls */
+    .slider-controls {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .control-btn {
+      background-color: var(--button-color, palevioletred);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      border-radius: 30px;
+      font-family: var(--font-primary, "Merienda", cursive);
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .control-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .slider span {
+        width: 60%;
+        max-width: 220px;
+        height: 55%;
+        transform: 
+          translateX(-50%) 
+          translateY(-50%) 
+          rotateY(calc(var(--i) * 45deg)) 
+          translateZ(calc(min(35vw, 250px)));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .slider-container {
+        height: 45vh;
+        min-height: 200px;
+      }
+      
+      .slider span {
+        width: 70%;
+        max-width: 200px;
+        height: 50%;
+        transform: 
+          translateX(-50%) 
+          translateY(-50%) 
+          rotateY(calc(var(--i) * 45deg)) 
+          translateZ(calc(min(45vw, 200px)));
+      }
+      
+      .slider span img {
+        border-radius: 10px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .slider {
+        animation: rotate 50s linear infinite;
+      }
+      
+      .slider-container {
+        height: 40vh;
+        min-height: 180px;
+        margin: 0.5rem auto;
+      }
+      
+      .slider span {
+        width: 80%;
+        max-width: 180px;
+        height: 45%;
+        min-height: 150px;
+        transform: 
+          translateX(-50%) 
+          translateY(-50%) 
+          rotateY(calc(var(--i) * 60deg)) 
+          translateZ(calc(min(60vw, 180px)));
+      }
+      
+      .slider span img {
+        border-radius: 8px;
+      }
+      
+      .slider-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      
+      .control-btn {
+        padding: 0.4rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+  <body>
+    <div class="emoji-overlay">
+      <div class="emoji">💖</div>
+      <div class="emoji">🌸</div>
+      <div class="emoji">💖</div>
+      <div class="emoji">💞</div>
+      <div class="emoji">💖</div>
+    </div>
+    <div class="page_content">
+      <h1 class="pacifico-regular">Happy Mother's Day</h1>
+      <p style="color: var(--accent-color, #dc3069); margin-bottom: 2rem; font-size: 1.2rem;">
+        Cherishing our beautiful moments together...
+      </p>
+      
+      <div class="slider-container">
+        <div class="slider" id="photoCarousel">
+          <span style="--i: 1"><img src="image4.jpg" alt="Mom and me" loading="lazy" /></span>
+          <span style="--i: 2"><img src="image1.jpg" alt="Special moment" loading="lazy" /></span>
+          <span style="--i: 3"><img src="image2.jpg" alt="Together" loading="lazy" /></span>
+          <span style="--i: 4"><img src="image3.jpg" alt="Loving memories" loading="lazy" /></span>
+          <span style="--i: 5"><img src="image5.jpg" alt="Family time" loading="lazy" /></span>
+          <span style="--i: 6"><img src="image6.jpg" alt="Celebration" loading="lazy" /></span>
+          <span style="--i: 7"><img src="image7.jpg" alt="Happy times" loading="lazy" /></span>
+          <span style="--i: 8"><img src="image8.jpg" alt="Precious moments" loading="lazy" /></span>
+        </div>
+      </div>
+      
+      <div class="slider-controls">
+        <button class="control-btn" id="prevBtn">Previous</button>
+        <button class="control-btn" id="playPauseBtn">Pause</button>
+        <button class="control-btn" id="nextBtn">Next</button>
+      </div>
+      
+      <div style="margin-top: 2rem;">
+        <a href="content.html" class="control-btn" style="text-decoration: none; display: inline-block; margin-top: 1rem;">
+          Back to Message
+        </a>
+      </div>
+    </div>
+    
+    <script>
+      const slider = document.getElementById('photoCarousel');
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let isPlaying = true;
+      let currentRotation = 0;
+      const rotationStep = 45; // degrees per image
+      
+      // Pause/Play functionality
+      playPauseBtn.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        playPauseBtn.textContent = isPlaying ? 'Pause' : 'Play';
+        if (isPlaying) {
+          slider.classList.remove('paused');
+        } else {
+          slider.classList.add('paused');
+        }
+      });
+      
+      // Manual navigation
+      function rotateCarousel(degrees) {
+        currentRotation = (currentRotation + degrees + 360) % 360;
+        slider.style.animation = 'none';
+        slider.offsetHeight; // Trigger reflow
+        slider.style.animation = `rotate ${360/rotationStep * 30}s linear infinite`;
+        slider.style.animationPlayState = isPlaying ? 'running' : 'paused';
+        slider.style.animationDelay = `-${currentRotation/rotationStep * 30/8}s`;
+      }
+      
+      prevBtn.addEventListener('click', () => {
+        rotateCarousel(rotationStep);
+      });
+      
+      nextBtn.addEventListener('click', () => {
+        rotateCarousel(-rotationStep);
+      });
+      
+      // Touch events for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+      
+      slider.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, false);
+      
+      slider.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, false);
+      
+      function handleSwipe() {
+        const swipeThreshold = 50; // Minimum distance for a swipe
+        const swipeDistance = touchEndX - touchStartX;
+        
+        if (Math.abs(swipeDistance) > swipeThreshold) {
+          if (swipeDistance > 0) {
+            // Swipe right - go to previous
+            rotateCarousel(rotationStep);
+          } else {
+            // Swipe left - go to next
+            rotateCarousel(-rotationStep);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
